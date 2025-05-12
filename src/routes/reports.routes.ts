@@ -2,18 +2,17 @@ import express from 'express';
 import { authorization } from '../middleware/auth.middleware';
 import { ReportController } from '../controllers/reports.controller';
 
-const Router = express.Router();
+const router = express.Router();
 
-Router.get('/reports', authorization, ReportController.getAllReports);
-Router.post('/reports', authorization, ReportController.addReport);
-
-Router.get('/report/:id', authorization, ReportController.getReportId);
-Router.put('/report/:id', authorization, ReportController.updateReport);
-Router.delete('/report/:id', authorization, ReportController.deleteReportById);
-Router.get(
-	'/reports/samewords/3',
+router.get('/', authorization, ReportController.getAllReports);
+router.post('/', authorization, ReportController.addReport);
+router.get('/:id', authorization, ReportController.getReportById);
+router.put('/:id', authorization, ReportController.updateReport);
+router.delete('/:id', authorization, ReportController.deleteReportById);
+router.get(
+	'/samewords/3',
 	authorization,
 	ReportController.getReportWith3SameWords,
 );
 
-export { Router as reportRouter };
+export { router as reportRouter };

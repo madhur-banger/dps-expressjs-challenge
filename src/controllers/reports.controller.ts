@@ -1,120 +1,159 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import Joi from 'joi';
 import db from '../services/db.service';
-
-interface Report {
-	id: string;
-	text: string;
-	projectid: string;
-}
+import { validateReportSchema } from '../utils/validateSchema';
 
 export class ReportController {
-	static async getAllReports(req: Request, res: Response) {
-		const reports = db.query('SELECT * FROM reports');
-		return res.status(200).json(reports);
+	static async getAllReports(
+		_req: Request,
+		res: Response,
+		next: NextFunction,
+	) {
+		try {
+			const reports = db.query('SELECT * FROM reports');
+			return res.status(200).json(reports);
+		} catch (err) {
+			next(err);
+		}
 	}
-	static async getReportId(req: Request, res: Response) {
-		const report = db.query(
-			`SELECT * FROM reports WHERE id = '${req.params.id}`,
-		);
-		if (Object.keys(report).length === 0)
+
+	static async getReportById(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	) {
+		try {
+			const { id } = req.params;
+			const report = db.query('SELECT * FROM reports WHERE id = :id', {
+				id,
+			});
+			if (Object.keys(report).length === 0)
+				return res.status(404).json({ message: 'Report not found' });
+			return res.status(200).json(report);
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	static async deleteReportById(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	) {
+		try {
+			const { id } = req.params;
+			const report = db.query('SELECT * FROM reports WHERE id = :id', {
+				id,
+			});
+			if (Object.keys(report).length === 0)
+				return res.status(404).json({ message: 'Report not found' });
+
+			db.run('DELETE FROM reports WHERE id = :id', { id });
 			return res
-				.status(404)
-				.send('The Report with given Id does not exist');
-		return res.status(200).json(report);
-	}
-	static async deleteReportById(req: Request, res: Response) {
-		const report = db.query(
-			`SELECT * FROM reports WHERE id = '${req.params.id}`,
-		);
-		if (Object.keys(report).length === 0)
-			return res
-				.status(404)
-				.send('The report with given Id does not exist');
-		db.run(`DELETE FROM reports WHERE id = '${req.params.id}`);
-		return res.status(200).json({
-			message: 'Report deleted successfully',
-			report,
-		});
-	}
-	static async addReport(req: Request, res: Response) {
-		const error = validateSchema(req);
-		if (error) return res.status(400).send(error.details[0].message);
-		if (!existProjectById(String(req.body.projectid)))
-			return res.status(404).send('Invalid Project Id');
-		const id = uuidv4();
-		const text = req.body.text;
-		const projectid = req.body.projectid;
-
-		db.run(
-			`INSERT INTO reports (id,text,projectid) VALUES (:id, :text, :projectid)`,
-			{ id, text, projectid },
-		);
-		return res.status(200).json({
-			message: 'User addedd Successfully',
-			report: [{ id, text, projectid }],
-		});
-	}
-	static async updateReport(req: Request, res: Response) {
-		const error = validateSchema(req);
-		if (error) return res.status(400).send(error.details[0].message);
-		const report = db.query(
-			`SELECT * FROM reports WHERE id = '${req.params.id}`,
-		);
-		if (Object.keys(report).length === 0)
-			return res
-				.status(404)
-				.send('The report with the given ID is not found.');
-		const id = req.params.id;
-		const text = req.body.text;
-		const projectid = req.body.projectid;
-
-		db.run(
-			`UPDATE reports SET text =:text, projectid =:projectid WHERE id =:id`,
-			{ id, text, projectid },
-		);
-		return res.status(200).json({
-			message: 'REport updated successfully',
-			report: [{ id, text, projectid }],
-		});
+				.status(200)
+				.json({ message: 'Report deleted successfully', report });
+		} catch (err) {
+			next(err);
+		}
 	}
 
-	static async getReportWith3SameWords(req: Request, res: Response) {
-		let reports = db.query('SELECT * FROM reports') as Report[];
-		reports = reports.filter((_report) => {
-			const wordCounts: Record<string, number> = {};
+	static async addReport(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { error } = validateReportSchema(req);
+			if (error)
+				return res
+					.status(400)
+					.json({ message: error.details[0].message });
 
-			const words = _report.text
-				.toLowerCase()
-				.replace(/[^\w\s]/g, '')
-				.split(/\s+/);
+			const { project_id, text } = req.body;
+			const exists = db.query('SELECT * FROM projects WHERE id = :id', {
+				id: project_id,
+			});
+			if (Object.keys(exists).length === 0)
+				return res.status(404).json({ message: 'Invalid project ID' });
 
-			for (const word of words) {
-				if (word) {
-					wordCounts[word] = (wordCounts[word] || 0) + 1;
+			const id = uuidv4();
+			db.run(
+				'INSERT INTO reports (id, text, projectid) VALUES (:id, :text, :project_id)',
+				{
+					id,
+					text,
+					project_id,
+				},
+			);
+
+			return res.status(201).json({
+				message: 'Report added successfully',
+				report: { id, text, project_id },
+			});
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	static async updateReport(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { id } = req.params;
+			const { error } = validateReportSchema(req);
+			if (error)
+				return res
+					.status(400)
+					.json({ message: error.details[0].message });
+
+			const existing = db.query('SELECT * FROM reports WHERE id = :id', {
+				id,
+			});
+			if (Object.keys(existing).length === 0)
+				return res.status(404).json({ message: 'Report not found' });
+
+			const { text, project_id } = req.body;
+			db.run(
+				'UPDATE reports SET text = :text, projectid = :project_id WHERE id = :id',
+				{
+					id,
+					text,
+					project_id,
+				},
+			);
+
+			return res.status(200).json({
+				message: 'Report updated successfully',
+				report: { id, text, project_id },
+			});
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	static async getReportWith3SameWords(
+		_req: Request,
+		res: Response,
+		next: NextFunction,
+	) {
+		try {
+			let reports = db.query('SELECT * FROM reports') as {
+				id: string;
+				text: string;
+				projectid: string;
+			}[];
+
+			reports = reports.filter((report) => {
+				const wordCounts: Record<string, number> = {};
+				const words = report.text
+					.toLowerCase()
+					.replace(/[^\w\s]/g, '')
+					.split(/\s+/);
+
+				for (const word of words) {
+					if (word) wordCounts[word] = (wordCounts[word] || 0) + 1;
 				}
-			}
-			return Object.values(wordCounts).some((count) => count >= 3);
-		});
-		return res.status(200).json(reports);
-	}
-}
 
-function existProjectById(id: string) {
-	const project = db.query(`SELECT * FROM projects WHERE id = ${id}`);
-	if (Object.keys(project).length === 0) {
-		return false;
-	} else {
-		return true;
-	}
-}
+				return Object.values(wordCounts).some((count) => count >= 3);
+			});
 
-function validateSchema(req: Request) {
-	const schema = Joi.object({
-		text: Joi.string().required(),
-		projectid: Joi.string().required(),
-	});
-	const { error } = schema.validate(req);
-	return error;
+			return res.status(200).json(reports);
+		} catch (err) {
+			next(err);
+		}
+	}
 }

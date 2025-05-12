@@ -17,6 +17,7 @@
 	"dependencies": {
 		"better-sqlite3": "^11.0.0",
 		"cookie-parser": "~1.4.4",
+		"cors": "^2.8.5",
 		"debug": "~2.6.9",
 		"dotenv": "^16.5.0",
 		"express": "^4.19.2",
@@ -24,12 +25,17 @@
 		"joi": "^17.13.3",
 		"morgan": "~1.9.1",
 		"pug": "^3.0.3",
+		"swagger-jsdoc": "^6.2.8",
+		"swagger-ui-express": "^5.0.1",
 		"uuid": "^10.0.0"
 	},
 	"devDependencies": {
 		"@types/better-sqlite3": "^7.6.10",
+		"@types/cors": "^2.8.18",
 		"@types/express": "^4.17.21",
 		"@types/node": "^20.14.2",
+		"@types/swagger-jsdoc": "^6.0.4",
+		"@types/swagger-ui-express": "^4.1.8",
 		"@types/uuid": "^9.0.8",
 		"@typescript-eslint/eslint-plugin": "^7.12.0",
 		"@typescript-eslint/parser": "^7.12.0",
