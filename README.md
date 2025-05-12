@@ -2,9 +2,9 @@
 
 Welcome to my submission for the **DPS Backend Coding Challenge**. This is a RESTful API built using **TypeScript**, **Express.js**, and **SQLite** for managing company **Projects** and their associated **Reports**.
 
-I structured this application to follow clean architectural principles — separating concerns into controllers, services, middleware, and utility layers — and ensured the codebase remains scalable and maintainable.
+It was quite an interesting project to work on, I structured this application to follow clean architectural principles — separating concerns into controllers, services, middleware, and utility layers — and ensured the codebase remains scalable and maintainable.
 
-### 🚀 Live API Documentation
+###  Live API Documentation
 
 You can explore the API with full Swagger documentation here:
 
@@ -12,24 +12,41 @@ You can explore the API with full Swagger documentation here:
 
 ---
 
-## 🧱 Project Structure
+## Project Structure
 
 ```bash
 .
-├── db/
-├── dist/
-├── images/
+├── db/                                
+├── dist/                              
+├── images/                            
 ├── node_modules/
 ├── src/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── routes/
-│   ├── services/
-│   ├── swagger/
+│   ├── controllers/                   
+│   │   ├── projects.controller.ts
+│   │   └── reports.controller.ts
+│
+│   ├── middleware/                   
+│   │   ├── auth.middleware.ts
+│   │   └── error.middleware.ts
+│
+│   ├── routes/                        
+│   │   ├── projects.routes.ts
+│   │   └── reports.routes.ts
+│
+│   ├── services/                     
+│
+│   ├── swagger/                       
 │   │   ├── components/
+│   │   │   └── schemas.ts
 │   │   └── paths/
-│   ├── utils/
-│   └── index.ts
+│   │       ├── projects.swagger.ts
+│   │       └── reports.swagger.ts
+│
+│   ├── utils/                         
+│   │   └── validateSchema.ts
+│
+│   └── index.ts                       
+│
 ├── package.json
 ├── tsconfig.json
 └── README.md
@@ -70,7 +87,7 @@ You can explore the API with full Swagger documentation here:
 
 ---
 
-## 📦 Setup Instructions
+##  Setup Instructions
 
 ### Prerequisites
 
@@ -91,7 +108,7 @@ npm run dev
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Backend application will be running on port 3000:
 
