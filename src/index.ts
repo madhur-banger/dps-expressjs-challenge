@@ -4,7 +4,7 @@ import cors from 'cors';
 import { projectRouter } from './routes/projects.routes';
 import { reportRouter } from './routes/reports.routes';
 import { errorHandler } from './middleware/error.middleware';
-import { swaggerUi, swaggerSpec } from '../src/swagger';
+import { swaggerUi, swaggerSpec } from './swagger';
 
 dotenv.config();
 
