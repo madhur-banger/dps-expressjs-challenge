@@ -4,6 +4,7 @@ import { ProjectController } from '../controllers/projects.controller';
 
 const router = express.Router();
 
+//Project router with auth
 router.get('/', authorization, ProjectController.getAllProjects);
 router.post('/', authorization, ProjectController.addProject);
 router.get('/:id', authorization, ProjectController.getProjectById);

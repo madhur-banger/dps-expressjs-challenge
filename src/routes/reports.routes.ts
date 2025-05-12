@@ -4,6 +4,7 @@ import { ReportController } from '../controllers/reports.controller';
 
 const router = express.Router();
 
+//Report Router with auth
 router.get('/', authorization, ReportController.getAllReports);
 router.post('/', authorization, ReportController.addReport);
 router.get('/:id', authorization, ReportController.getReportById);

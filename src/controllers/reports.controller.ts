@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import db from '../services/db.service';
 import { validateReportSchema } from '../utils/validateSchema';
 
+//Report Controllers
 export class ReportController {
 	static async getAllReports(
 		_req: Request,
