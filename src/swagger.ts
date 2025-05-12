@@ -8,10 +8,16 @@ import { schemas } from './swagger/components/schemas';
 const swaggerDefinition = {
 	openapi: '3.0.0',
 	info: {
-		title: 'Projects & Reports API',
+		title: 'DPS Backend Application',
 		version: '1.0.0',
-		description: 'API for managing projects and their reports',
+		description: 'API documentation for DPS-expressjs-challenge ',
+		contact: {
+			name: 'Madhur',
+			url: 'https://www.linkedin.com/in/madhur-%E2%98%81%EF%B8%8F-5539612a9/',
+			// email: 'madhur.cloudevops@gmail.com',
+		},
 	},
+
 	//   servers: [
 	//     {
 	//       url: '',
@@ -37,6 +43,10 @@ const swaggerDefinition = {
 		{
 			bearerAuth: [],
 		},
+	],
+	tags: [
+		{ name: 'Projects', description: 'Operations related to projects' },
+		{ name: 'Reports', description: 'Operations related to reports' },
 	],
 };
 

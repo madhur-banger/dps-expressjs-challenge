@@ -4,7 +4,7 @@ Welcome to my submission for the **DPS Backend Coding Challenge**. This is a RES
 
 It was quite an interesting project to work on, I structured this application to follow clean architectural principles — separating concerns into controllers, services, middleware, and utility layers — and ensured the codebase remains scalable and maintainable.
 
-###  Live API Documentation
+### Live API Documentation
 
 You can explore the API with full Swagger documentation here:
 
@@ -16,36 +16,36 @@ You can explore the API with full Swagger documentation here:
 
 ```bash
 .
-├── db/                                
-├── dist/                              
-├── images/                            
+├── db/
+├── dist/
+├── images/
 ├── node_modules/
 ├── src/
-│   ├── controllers/                   
+│   ├── controllers/
 │   │   ├── projects.controller.ts
 │   │   └── reports.controller.ts
 │
-│   ├── middleware/                   
+│   ├── middleware/
 │   │   ├── auth.middleware.ts
 │   │   └── error.middleware.ts
 │
-│   ├── routes/                        
+│   ├── routes/
 │   │   ├── projects.routes.ts
 │   │   └── reports.routes.ts
 │
-│   ├── services/                     
+│   ├── services/
 │
-│   ├── swagger/                       
+│   ├── swagger/
 │   │   ├── components/
 │   │   │   └── schemas.ts
 │   │   └── paths/
 │   │       ├── projects.swagger.ts
 │   │       └── reports.swagger.ts
 │
-│   ├── utils/                         
+│   ├── utils/
 │   │   └── validateSchema.ts
 │
-│   └── index.ts                       
+│   └── index.ts
 │
 ├── package.json
 ├── tsconfig.json
@@ -87,7 +87,7 @@ You can explore the API with full Swagger documentation here:
 
 ---
 
-##  Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 

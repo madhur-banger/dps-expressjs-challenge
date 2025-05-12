@@ -1,6 +1,7 @@
 export const projectSwaggerDocs = {
 	'/api/v1/projects': {
 		get: {
+			tags: ['Projects'],
 			summary: 'Get all projects',
 			description: 'Retrieve a list of all projects',
 			security: [{ bearerAuth: [] }],
@@ -22,6 +23,7 @@ export const projectSwaggerDocs = {
 			},
 		},
 		post: {
+			tags: ['Projects'],
 			summary: 'Create a new project',
 			description: 'Add a new project to the system',
 			security: [{ bearerAuth: [] }],
@@ -52,6 +54,7 @@ export const projectSwaggerDocs = {
 	},
 	'/api/v1/projects/{id}': {
 		get: {
+			tags: ['Projects'],
 			summary: 'Get a project by ID',
 			description:
 				'Retrieve a specific project using its unique identifier',
@@ -81,6 +84,7 @@ export const projectSwaggerDocs = {
 			},
 		},
 		put: {
+			tags: ['Projects'],
 			summary: 'Update a project',
 			description: 'Update an existing project',
 			security: [{ bearerAuth: [] }],
@@ -119,6 +123,7 @@ export const projectSwaggerDocs = {
 			},
 		},
 		delete: {
+			tags: ['Projects'],
 			summary: 'Delete a project',
 			description: 'Remove a project from the system',
 			security: [{ bearerAuth: [] }],

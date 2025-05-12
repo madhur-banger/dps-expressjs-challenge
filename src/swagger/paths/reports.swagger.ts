@@ -2,6 +2,7 @@
 export const reportSwaggerDocs = {
 	'/api/v1/reports': {
 		get: {
+			tags: ['Reports'],
 			summary: 'Get all reports',
 			description: 'Retrieve a list of all reports',
 			security: [{ bearerAuth: [] }],
@@ -23,6 +24,7 @@ export const reportSwaggerDocs = {
 			},
 		},
 		post: {
+			tags: ['Reports'],
 			summary: 'Create a new report',
 			description: 'Add a new report to the system',
 			security: [{ bearerAuth: [] }],
@@ -53,6 +55,7 @@ export const reportSwaggerDocs = {
 	},
 	'/api/v1/reports/{id}': {
 		get: {
+			tags: ['Reports'],
 			summary: 'Get a report by ID',
 			description:
 				'Retrieve a specific report using its unique identifier',
@@ -82,6 +85,7 @@ export const reportSwaggerDocs = {
 			},
 		},
 		put: {
+			tags: ['Reports'],
 			summary: 'Update a report',
 			description: 'Update an existing report',
 			security: [{ bearerAuth: [] }],
@@ -120,6 +124,7 @@ export const reportSwaggerDocs = {
 			},
 		},
 		delete: {
+			tags: ['Reports'],
 			summary: 'Delete a report',
 			description: 'Remove a report from the system',
 			security: [{ bearerAuth: [] }],
@@ -143,6 +148,7 @@ export const reportSwaggerDocs = {
 	},
 	'/api/v1/reports/samewords/3': {
 		get: {
+			tags: ['Special Endpoint'],
 			summary: 'Get reports with 3 same words',
 			description: 'Retrieve reports that have 3 same words',
 			security: [{ bearerAuth: [] }],
