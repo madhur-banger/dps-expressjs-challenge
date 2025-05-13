@@ -14,16 +14,9 @@ const swaggerDefinition = {
 		contact: {
 			name: 'Madhur',
 			url: 'https://www.linkedin.com/in/madhur-%E2%98%81%EF%B8%8F-5539612a9/',
-			// email: 'madhur.cloudevops@gmail.com',
 		},
 	},
 
-	//   servers: [
-	//     {
-	//       url: '',
-	//       description: 'Base API path'
-	//     }
-	//   ],
 	components: {
 		securitySchemes: {
 			bearerAuth: {
