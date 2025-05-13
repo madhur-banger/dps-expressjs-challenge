@@ -17,10 +17,10 @@ app.get('/', (req, res) => {
 	res.send('Welcome to My Backend Assignment :)');
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 app.use('/api/v1/projects', projectRouter);
 app.use('/api/v1/reports', reportRouter);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('*', (_req, res) => {
 	res.status(404).json({ message: 'Route not found' });
