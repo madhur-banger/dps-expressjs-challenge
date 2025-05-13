@@ -11,7 +11,7 @@ export class ReportController {
 		next: NextFunction,
 	) {
 		try {
-			const reports = db.query('SELECT * FROM reports');
+			const reports = await db.query('SELECT * FROM reports');
 			return res.status(200).json(reports);
 		} catch (err) {
 			next(err);
@@ -25,9 +25,12 @@ export class ReportController {
 	) {
 		try {
 			const { id } = req.params;
-			const report = db.query('SELECT * FROM reports WHERE id = :id', {
-				id,
-			});
+			const report = await db.query(
+				'SELECT * FROM reports WHERE id = :id',
+				{
+					id,
+				},
+			);
 			if (Object.keys(report).length === 0)
 				return res.status(404).json({ message: 'Report not found' });
 			return res.status(200).json(report);
@@ -43,13 +46,16 @@ export class ReportController {
 	) {
 		try {
 			const { id } = req.params;
-			const report = db.query('SELECT * FROM reports WHERE id = :id', {
-				id,
-			});
+			const report = await db.query(
+				'SELECT * FROM reports WHERE id = :id',
+				{
+					id,
+				},
+			);
 			if (Object.keys(report).length === 0)
 				return res.status(404).json({ message: 'Report not found' });
 
-			db.run('DELETE FROM reports WHERE id = :id', { id });
+			await db.run('DELETE FROM reports WHERE id = :id', { id });
 			return res
 				.status(200)
 				.json({ message: 'Report deleted successfully', report });
@@ -67,14 +73,17 @@ export class ReportController {
 					.json({ message: error.details[0].message });
 
 			const { project_id, text } = req.body;
-			const exists = db.query('SELECT * FROM projects WHERE id = :id', {
-				id: project_id,
-			});
+			const exists = await db.query(
+				'SELECT * FROM projects WHERE id = :id',
+				{
+					id: project_id,
+				},
+			);
 			if (Object.keys(exists).length === 0)
 				return res.status(404).json({ message: 'Invalid project ID' });
 
 			const id = uuidv4();
-			db.run(
+			await db.run(
 				'INSERT INTO reports (id, text, projectid) VALUES (:id, :text, :project_id)',
 				{
 					id,
@@ -101,14 +110,17 @@ export class ReportController {
 					.status(400)
 					.json({ message: error.details[0].message });
 
-			const existing = db.query('SELECT * FROM reports WHERE id = :id', {
-				id,
-			});
+			const existing = await db.query(
+				'SELECT * FROM reports WHERE id = :id',
+				{
+					id,
+				},
+			);
 			if (Object.keys(existing).length === 0)
 				return res.status(404).json({ message: 'Report not found' });
 
 			const { text, project_id } = req.body;
-			db.run(
+			await db.run(
 				'UPDATE reports SET text = :text, projectid = :project_id WHERE id = :id',
 				{
 					id,
@@ -132,7 +144,7 @@ export class ReportController {
 		next: NextFunction,
 	) {
 		try {
-			let reports = db.query('SELECT * FROM reports') as {
+			let reports = (await db.query('SELECT * FROM reports')) as {
 				id: string;
 				text: string;
 				projectid: string;

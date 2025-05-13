@@ -11,7 +11,7 @@ export class ProjectController {
 		next: NextFunction,
 	) {
 		try {
-			const projects = db.query('SELECT * FROM projects');
+			const projects = await db.query('SELECT * FROM projects');
 			return res.status(200).json(projects);
 		} catch (err) {
 			next(err);
@@ -25,9 +25,12 @@ export class ProjectController {
 	) {
 		try {
 			const { id } = req.params;
-			const project = db.query('SELECT * FROM projects WHERE id = :id', {
-				id,
-			});
+			const project = await db.query(
+				'SELECT * FROM projects WHERE id = :id',
+				{
+					id,
+				},
+			);
 			if (Object.keys(project).length === 0)
 				return res.status(404).json({ message: 'Project not found' });
 			return res.status(200).json(project);
@@ -43,9 +46,12 @@ export class ProjectController {
 	) {
 		try {
 			const { id } = req.params;
-			const project = db.query('SELECT * FROM projects WHERE id = :id', {
-				id,
-			});
+			const project = await db.query(
+				'SELECT * FROM projects WHERE id = :id',
+				{
+					id,
+				},
+			);
 			if (Object.keys(project).length === 0)
 				return res.status(404).json({ message: 'Project not found' });
 
@@ -68,7 +74,7 @@ export class ProjectController {
 
 			const id = uuidv4();
 			const { name, description } = req.body;
-			db.run(
+			await db.run(
 				'INSERT INTO projects (id, name, description) VALUES (:id, :name, :description)',
 				{ id, name, description },
 			);
@@ -94,14 +100,17 @@ export class ProjectController {
 					.status(400)
 					.json({ message: error.details[0].message });
 
-			const existing = db.query('SELECT * FROM projects WHERE id = :id', {
-				id,
-			});
+			const existing = await db.query(
+				'SELECT * FROM projects WHERE id = :id',
+				{
+					id,
+				},
+			);
 			if (Object.keys(existing).length === 0)
 				return res.status(404).json({ message: 'Project not found' });
 
 			const { name, description } = req.body;
-			db.run(
+			await db.run(
 				'UPDATE projects SET name = :name, description = :description WHERE id = :id',
 				{
 					id,
