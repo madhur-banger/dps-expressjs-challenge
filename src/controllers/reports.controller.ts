@@ -31,9 +31,9 @@ export class ReportController {
 					id,
 				},
 			);
-			if (Object.keys(report).length === 0)
+			if (!report || report.length === 0)
 				return res.status(404).json({ message: 'Report not found' });
-			return res.status(200).json(report);
+			return res.status(200).json(report[0]);
 		} catch (err) {
 			next(err);
 		}
