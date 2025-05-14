@@ -2,13 +2,19 @@
 
 Welcome to my submission for the **DPS Backend Coding Challenge**. This is a RESTful API built using **TypeScript**, **Express.js**, and **SQLite** for managing company **Projects** and their associated **Reports**.
 
+## Demo
+
+#### Watch the video for demo
+
+[![Watch the demo](https://img.youtube.com/vi/ssRiBM5Rjrg/maxresdefault.jpg)](https://youtu.be/ssRiBM5Rjrg)
+
 It was quite an interesting project to work on, I structured this application to follow clean architectural principles — separating concerns into controllers, services, middleware, and utility layers — and ensured the codebase remains scalable and maintainable.
 
 ### Live API Documentation
 
-You can explore the API with full Swagger documentation here:
+#### You can explore the API with full Swagger documentation here:
 
-## **[API Docs on Render](https://dps-expressjs-challenge-h09j.onrender.com/api-docs/)**
+# **[API Docs on Render](https://dps-expressjs-challenge-h09j.onrender.com/api-docs/)**
 
 ---
 
