@@ -15,6 +15,7 @@ It was quite an interesting project to work on, I structured this application to
 #### You can explore the API with full Swagger documentation here:
 
 # **[API Docs on Render](https://dps-expressjs-challenge-h09j.onrender.com/api-docs/)**
+![API Docs](images/api.-docs.png)
 
 ---
 
